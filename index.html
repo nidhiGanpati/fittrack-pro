@@ -3,408 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="FitTrack Pro - Transform Your Fitness Journey">
-    <title>Login - FitTrack Pro</title>
+    <title>FitTrack Pro - Your Complete Fitness Solution</title>
     
-    <!-- Bootstrap 5.3.2 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
     
     <style>
-        :root {
-            --primary: #6366f1;
-            --secondary: #8b5cf6;
-            --success: #10b981;
-            --danger: #ef4444;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000000;
+            color: #ffffff;
+        }
+        
+        /* Hero Section */
+        .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            position: relative;
+            overflow: hidden;
         }
         
-        .brand-section {
-            text-align: center;
-            margin-bottom: 2rem;
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255,107,53,0.15) 0%, transparent 70%);
+            top: -250px;
+            right: -250px;
         }
         
-        .brand-logo {
-            width: 90px;
-            height: 90px;
-            background: white;
-            border-radius: 22px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
+            bottom: -200px;
+            left: -200px;
         }
         
-        .brand-logo i {
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .brand {
             font-size: 3rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b35, #6366f1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
         }
         
-        .brand-title {
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #a0a0a0;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background: #1a1a1a;
+            border: 2px solid #2a2a2a;
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
             color: white;
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            display: block;
         }
         
-        .login-card {
-            background: white;
-            border-radius: 28px;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.35);
-        }
-        
-        .login-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        .feature-card:hover {
+            border-color: #ff6b35;
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(255,107,53,0.2);
             color: white;
-            padding: 2.5rem 2rem;
-            text-align: center;
-            border-radius: 28px 28px 0 0;
         }
         
-        .login-body {
-            padding: 3rem 2.5rem 2.5rem;
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #ff6b35, #6366f1);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
         }
         
-        .form-control {
-            border: 2px solid #e2e8f0;
-            border-radius: 14px;
-            padding: 1.2rem 1.25rem;
-            height: 60px;
+        .feature-icon i {
+            font-size: 2rem;
+            color: white;
         }
         
-        .form-control:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-        }
-        
-        .form-control.is-valid {
-            border-color: var(--success);
-        }
-        
-        .form-control.is-invalid {
-            border-color: var(--danger);
-        }
-        
-        .btn-login {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border: none;
-            border-radius: 14px;
-            padding: 1.1rem 2rem;
+        .feature-title {
+            font-size: 1.5rem;
             font-weight: 700;
-            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
         }
         
-        .btn-login:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+        .feature-desc {
+            color: #a0a0a0;
+            font-size: 1rem;
+            line-height: 1.5;
         }
         
-        .social-btn {
-            border: 2px solid #e2e8f0;
-            border-radius: 14px;
-            padding: 0.85rem;
-            font-weight: 600;
-        }
-        
-        .social-btn:hover {
-            border-color: var(--primary);
-            transform: translateY(-3px);
-        }
-        
-        .alert {
-            border-radius: 14px;
+        .btn-hero {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            color: white;
+            padding: 1.3rem 3rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
             border: none;
-            padding: 1rem 1.25rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-hero:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 50px rgba(255,107,53,0.4);
+            color: white;
         }
         
         @media (max-width: 768px) {
-            .brand-title { font-size: 2rem; }
-            .login-body { padding: 2rem 1.5rem; }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .brand {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-7 col-sm-11">
-                
-                <!-- Brand Section -->
-                <div class="brand-section">
-                    <div class="brand-logo">
-                        <i class="bi bi-lightning-charge-fill"></i>
+    
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="text-center">
+                    <div class="brand">
+                        <i class="bi bi-lightning-charge-fill"></i> FITTRACK PRO
                     </div>
-                    <h1 class="brand-title">FitTrack Pro</h1>
-                    <p class="text-white">
-                        <span class="badge bg-light text-dark">
-                            <i class="bi bi-shield-check me-1"></i>
-                            Trusted by 100,000+ Users
-                        </span>
-                    </p>
-                </div>
-                
-                <!-- Login Card -->
-                <div class="card login-card">
-                    <div class="login-header">
-                        <h2><i class="bi bi-box-arrow-in-right me-2"></i>Welcome Back!</h2>
-                        <p class="mb-0">Sign in to continue your fitness journey</p>
-                    </div>
+                    <h1 class="hero-title">Transform Your<br>Fitness Journey</h1>
+                    <p class="hero-subtitle">Track workouts, nutrition, and progress all in one place</p>
                     
-                    <div class="login-body">
-                        <!-- Info Alert -->
-                        <div class="alert alert-info" id="infoAlert">
-                            <i class="bi bi-info-circle-fill me-2"></i>
-                            <strong>Demo:</strong> demo@fittrack.com | password123
-                        </div>
-                        
-                        <!-- Success Alert -->
-                        <div class="alert alert-success d-none" id="successAlert">
-                            <i class="bi bi-check-circle-fill me-2"></i>
-                            <strong>Success!</strong> Logging you in...
-                        </div>
-                        
-                        <!-- Error Alert -->
-                        <div class="alert alert-danger d-none" id="errorAlert">
-                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                            <span id="errorMessage">Invalid credentials</span>
-                        </div>
-                        
-                        <!-- Login Form -->
-                        <form id="loginForm" novalidate>
-                            <!-- Email Input -->
-                            <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="emailInput" 
-                                       placeholder="name@example.com" required>
-                                <label><i class="bi bi-envelope me-2"></i>Email Address</label>
-                                <div class="valid-feedback">
-                                    <i class="bi bi-check-circle-fill"></i> Looks good!
-                                </div>
-                                <div class="invalid-feedback">
-                                    <i class="bi bi-x-circle-fill"></i> Please enter a valid email
-                                </div>
-                            </div>
-                            
-                            <!-- Password Input -->
-                            <div class="form-floating mb-3 position-relative">
-                                <input type="password" class="form-control" id="passwordInput" 
-                                       placeholder="Password" required minlength="8">
-                                <label><i class="bi bi-lock me-2"></i>Password</label>
-                                <button type="button" class="btn btn-link position-absolute end-0 top-50 translate-middle-y" 
-                                        id="togglePassword" style="z-index: 10;">
-                                    <i class="bi bi-eye" id="toggleIcon"></i>
-                                </button>
-                                <div class="valid-feedback">
-                                    <i class="bi bi-check-circle-fill"></i> Strong password!
-                                </div>
-                                <div class="invalid-feedback">
-                                    <i class="bi bi-x-circle-fill"></i> Password must be 8+ characters
-                                </div>
-                            </div>
-                            
-                            <!-- Remember Me -->
-                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="rememberMe">
-                                    <label class="form-check-label" for="rememberMe">
-                                        Remember me
-                                    </label>
-                                </div>
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#forgotModal">
-                                    Forgot Password?
-                                </a>
-                            </div>
-                            
-                            <!-- Login Button -->
-                            <button type="submit" class="btn btn-login btn-primary w-100 mb-3" id="loginBtn">
-                                <span class="spinner-border spinner-border-sm d-none me-2" id="spinner"></span>
-                                <span id="btnText">
-                                    <i class="bi bi-box-arrow-in-right me-2"></i>Sign In Securely
-                                </span>
-                            </button>
-                        </form>
-                        
-                        <!-- Divider -->
-                        <div class="text-center my-4">
-                            <small class="text-muted">or continue with</small>
-                        </div>
-                        
-                        <!-- Social Login -->
-                        <div class="row g-2 mb-4">
-                            <div class="col-6">
-                                <button class="btn social-btn w-100">
-                                    <i class="bi bi-google text-danger me-2"></i>Google
-                                </button>
-                            </div>
-                            <div class="col-6">
-                                <button class="btn social-btn w-100">
-                                    <i class="bi bi-facebook text-primary me-2"></i>Facebook
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="text-center">
-                            <p class="mb-0">
-                                Don't have an account? 
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal">Sign Up</a>
-                            </p>
-                        </div>
-                    </div>
+                    <a href="dashboard.html" class="btn-hero">
+                        <i class="bi bi-rocket-takeoff me-2"></i>Get Started Free
+                    </a>
                 </div>
                 
-                <p class="text-center text-white mt-4">
-                    <small>&copy; 2025 FitTrack Pro. All rights reserved.</small>
-                </p>
+                <div class="feature-grid">
+                    <!-- Dashboard -->
+                    <a href="dashboard.html" class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-speedometer2"></i>
+                        </div>
+                        <div class="feature-title">Dashboard</div>
+                        <div class="feature-desc">Track all your fitness metrics in one place with real-time statistics</div>
+                    </a>
+                    
+                    <!-- Nutrition & Videos -->
+                    <a href="nutrition.html" class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-play-circle"></i>
+                        </div>
+                        <div class="feature-title">Exercise Videos</div>
+                        <div class="feature-desc">Watch expert-led workouts for all ages and fitness levels</div>
+                    </a>
+                    
+                    <!-- Workouts -->
+                    <a href="workouts.html" class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-clipboard-data"></i>
+                        </div>
+                        <div class="feature-title">Workout Library</div>
+                        <div class="feature-desc">Browse 1000+ exercises with detailed instructions</div>
+                    </a>
+                    
+                    <!-- Progress -->
+                    <a href="progress.html" class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-graph-up-arrow"></i>
+                        </div>
+                        <div class="feature-title">Progress Tracking</div>
+                        <div class="feature-desc">Visualize your journey with charts and analytics</div>
+                    </a>
+                    
+                    <!-- Body Measurements -->
+                    <a href="measurements.html" class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-rulers"></i>
+                        </div>
+                        <div class="feature-title">Body Measurements</div>
+                        <div class="feature-desc">Track weight, BMI, and body measurements over time</div>
+                    </a>
+                    
+                    <!-- Meal Planner -->
+                    <a href="meal-planner.html" class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-calendar-week"></i>
+                        </div>
+                        <div class="feature-title">Meal Planner</div>
+                        <div class="feature-desc">Get personalized meal plans based on your goals</div>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
     
-    <!-- Forgot Password Modal -->
-    <div class="modal fade" id="forgotModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="border-radius: 24px;">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="bi bi-key me-2"></i>Reset Password</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Enter your email to receive a password reset link.</p>
-                    <input type="email" class="form-control" placeholder="Enter your email">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Send Link</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Sign Up Modal -->
-    <div class="modal fade" id="signupModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="border-radius: 24px;">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="bi bi-person-plus me-2"></i>Create Account</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <input type="text" class="form-control mb-3" placeholder="Full Name">
-                    <input type="email" class="form-control mb-3" placeholder="Email">
-                    <input type="password" class="form-control" placeholder="Password">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Create Account</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-    
     <script>
-        // Form elements
-        const form = document.getElementById('loginForm');
-        const emailInput = document.getElementById('emailInput');
-        const passwordInput = document.getElementById('passwordInput');
-        const loginBtn = document.getElementById('loginBtn');
-        const spinner = document.getElementById('spinner');
-        const btnText = document.getElementById('btnText');
-        const successAlert = document.getElementById('successAlert');
-        const errorAlert = document.getElementById('errorAlert');
-        const infoAlert = document.getElementById('infoAlert');
-        const errorMessage = document.getElementById('errorMessage');
-        
-        // Email validation
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        
-        // Real-time email validation
-        emailInput.addEventListener('input', function() {
-            if (this.value && emailPattern.test(this.value)) {
-                this.classList.add('is-valid');
-                this.classList.remove('is-invalid');
-            } else if (this.value) {
-                this.classList.add('is-invalid');
-                this.classList.remove('is-valid');
-            }
-        });
-        
-        // Real-time password validation
-        passwordInput.addEventListener('input', function() {
-            if (this.value.length >= 8) {
-                this.classList.add('is-valid');
-                this.classList.remove('is-invalid');
-            } else if (this.value) {
-                this.classList.add('is-invalid');
-                this.classList.remove('is-valid');
-            }
-        });
-        
-        // Toggle password visibility
-        document.getElementById('togglePassword').addEventListener('click', function() {
-            const type = passwordInput.type === 'password' ? 'text' : 'password';
-            passwordInput.type = type;
-            document.getElementById('toggleIcon').classList.toggle('bi-eye');
-            document.getElementById('toggleIcon').classList.toggle('bi-eye-slash');
-        });
-        
-        // Form submission
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            successAlert.classList.add('d-none');
-            errorAlert.classList.add('d-none');
-            infoAlert.classList.add('d-none');
-            
-            const email = emailInput.value.trim();
-            const password = passwordInput.value;
-            
-            // Validate
-            let isValid = true;
-            if (!email || !emailPattern.test(email)) {
-                emailInput.classList.add('is-invalid');
-                isValid = false;
-            }
-            if (!password || password.length < 8) {
-                passwordInput.classList.add('is-invalid');
-                isValid = false;
-            }
-            
-            if (isValid) {
-                // Show loading
-                spinner.classList.remove('d-none');
-                loginBtn.disabled = true;
-                
-                // Simulate API call
-                setTimeout(() => {
-                    spinner.classList.add('d-none');
-                    loginBtn.disabled = false;
-                    
-                    if (email === 'demo@fittrack.com' && password === 'password123') {
-                        successAlert.classList.remove('d-none');
-                        setTimeout(() => {
-                            window.location.href = 'landing.html';
-                        }, 1500);
-                    } else {
-                        errorMessage.textContent = 'Invalid credentials. Try: demo@fittrack.com / password123';
-                        errorAlert.classList.remove('d-none');
-                    }
-                }, 2000);
-            }
-        });
-        
-        console.log('Demo: demo@fittrack.com / password123');
+        console.log('🏠 FitTrack Pro Home - All features unlocked');
+        console.log('✅ No login required - Direct access to all pages');
     </script>
 </body>
 </html>

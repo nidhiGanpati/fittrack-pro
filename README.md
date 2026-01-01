@@ -295,7 +295,7 @@ Light Color:      #f8fafc (Light Gray)
 
 ## 🔗 Live Demo
 
-**[View Live Demo](https://your-username.github.io/fittrack-pro/)**
+**[View Live Demo](https://nidhiganpati.github.io/fittrack-pro/)**
 
 ---
 

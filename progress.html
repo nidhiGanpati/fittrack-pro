@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Tracking - FitTrack Pro</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            margin: 0;
+        }
+        
+        .navbar {
+            background: #0a0a0a;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        
+        .navbar-brand {
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b35, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.5rem;
+        }
+        
+        .nav-link {
+            color: #a0a0a0 !important;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem !important;
+        }
+        
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-dark {
+            background: #0d0d0d;
+            border: 1px solid #1a1a1a;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .achievement-card {
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border: 2px solid #2a2a2a;
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .achievement-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .stat-box {
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b35, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-label {
+            color: #a0a0a0;
+            margin-top: 0.5rem;
+        }
+        
+        .progress-bar-custom {
+            height: 12px;
+            background: #2a2a2a;
+            border-radius: 50px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b35, #6366f1);
+            border-radius: 50px;
+            transition: width 1s ease;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid px-5">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-lightning-charge-fill me-2"></i>FITTRACK PRO
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="nutrition.html">Videos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="workouts.html">Workouts</a></li>
+                    <li class="nav-item"><a class="nav-link" href="measurements.html">Measurements</a></li>
+                    <li class="nav-item"><a class="nav-link" href="meal-planner.html">Meal Planner</a></li>
+                    <li class="nav-item"><a class="nav-link" href="progress.html" style="color: #ff6b35 !important;">Progress</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        
+        <!-- Header -->
+        <div class="mb-5">
+            <h1 class="page-title">
+                <i class="bi bi-graph-up-arrow text-success me-3"></i>Your Progress
+            </h1>
+            <p style="color: #a0a0a0; font-size: 1.1rem;">Track your fitness journey with detailed analytics</p>
+        </div>
+        
+        <!-- Summary Stats -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-3">
+                <div class="stat-box">
+                    <div class="stat-number">42</div>
+                    <div class="stat-label">Workouts This Month</div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="stat-box">
+                    <div class="stat-number" style="background: linear-gradient(135deg, #10b981, #059669); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">8,540</div>
+                    <div class="stat-label">Calories Burned</div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="stat-box">
+                    <div class="stat-number" style="background: linear-gradient(135deg, #ef4444, #dc2626); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">-3.2</div>
+                    <div class="stat-label">Weight Change (kg)</div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="stat-box">
+                    <div class="stat-number" style="background: linear-gradient(135deg, #f59e0b, #d97706); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">7</div>
+                    <div class="stat-label">Current Streak</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Charts -->
+        <div class="row g-4 mb-4">
+            <div class="col-lg-8">
+                <div class="card-dark">
+                    <h5 class="mb-4">📈 Monthly Progress</h5>
+                    <canvas id="monthlyChart" height="80"></canvas>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card-dark">
+                    <h5 class="mb-4">🎯 Activity Breakdown</h5>
+                    <canvas id="activityChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Weight Tracking -->
+        <div class="row g-4 mb-4">
+            <div class="col-lg-6">
+                <div class="card-dark">
+                    <h5 class="mb-4">⚖️ Weight Tracking</h5>
+                    <canvas id="weightChart" height="60"></canvas>
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <div class="card-dark">
+                    <h5 class="mb-4">📊 Body Composition</h5>
+                    
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Body Fat %</span>
+                            <span class="text-warning">18%</span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" style="width: 18%; background: linear-gradient(90deg, #f59e0b, #d97706);"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Muscle Mass</span>
+                            <span class="text-success">58 kg</span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" style="width: 77%; background: linear-gradient(90deg, #10b981, #059669);"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Water %</span>
+                            <span class="text-info">60%</span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" style="width: 60%; background: linear-gradient(90deg, #3b82f6, #2563eb);"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive mt-4">
+                        <table class="table table-dark">
+                            <tbody>
+                                <tr>
+                                    <td>Current Weight</td>
+                                    <td class="text-end">75 kg</td>
+                                    <td class="text-end text-success">-2 kg</td>
+                                </tr>
+                                <tr>
+                                    <td>BMI</td>
+                                    <td class="text-end">23.5</td>
+                                    <td class="text-end"><span class="badge bg-success">Healthy</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Target Weight</td>
+                                    <td class="text-end">72 kg</td>
+                                    <td class="text-end text-warning">-3 kg to go</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Achievements -->
+        <div class="card-dark">
+            <h4 class="mb-4">
+                <i class="bi bi-trophy-fill text-warning me-2"></i>
+                Recent Achievements
+            </h4>
+            
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="achievement-card">
+                        <div class="achievement-icon">
+                            <i class="bi bi-trophy-fill text-white fs-3"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-1">7-Day Streak!</h6>
+                            <p class="text-muted mb-0 small">Completed 7 consecutive days of workouts</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="achievement-card">
+                        <div class="achievement-icon" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
+                            <i class="bi bi-fire text-white fs-3"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-1">Calorie Crusher</h6>
+                            <p class="text-muted mb-0 small">Burned 5,000+ calories this week</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="achievement-card">
+                        <div class="achievement-icon" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
+                            <i class="bi bi-star-fill text-white fs-3"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-1">Consistency King</h6>
+                            <p class="text-muted mb-0 small">Worked out 20 days this month</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="achievement-card">
+                        <div class="achievement-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+                            <i class="bi bi-heart-fill text-white fs-3"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-1">Healthy Habits</h6>
+                            <p class="text-muted mb-0 small">Logged meals for 30 days straight</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Weekly Summary -->
+        <div class="card-dark">
+            <h4 class="mb-4">
+                <i class="bi bi-calendar-week text-info me-2"></i>
+                This Week's Summary
+            </h4>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h6 class="mb-3">Workout Stats</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">✅ <strong>5 workouts</strong> completed</li>
+                        <li class="mb-2">🔥 <strong>1,850 calories</strong> burned</li>
+                        <li class="mb-2">⏱️ <strong>210 minutes</strong> active</li>
+                        <li class="mb-2">📈 <strong>+15%</strong> vs last week</li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-6">
+                    <h6 class="mb-3">Nutrition Stats</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">🍽️ Average <strong>1,850 calories/day</strong></li>
+                        <li class="mb-2">🥩 <strong>135g protein</strong> average</li>
+                        <li class="mb-2">💧 <strong>7.5 glasses</strong> water/day</li>
+                        <li class="mb-2">✅ <strong>On track</strong> for goals</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Monthly Progress Chart
+            const monthlyCtx = document.getElementById('monthlyChart');
+            if (monthlyCtx && typeof Chart !== 'undefined') {
+                new Chart(monthlyCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                        datasets: [
+                            {
+                                label: 'Workouts',
+                                data: [8, 12, 10, 12],
+                                borderColor: '#ff6b35',
+                                backgroundColor: 'rgba(255, 107, 53, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            },
+                            {
+                                label: 'Calories (x100)',
+                                data: [18, 22, 20, 24],
+                                borderColor: '#6366f1',
+                                backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                labels: { color: '#a0a0a0' }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: '#1a1a1a' },
+                                ticks: { color: '#a0a0a0' }
+                            },
+                            x: {
+                                grid: { color: '#1a1a1a' },
+                                ticks: { color: '#a0a0a0' }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Activity Breakdown
+            const activityCtx = document.getElementById('activityChart');
+            if (activityCtx && typeof Chart !== 'undefined') {
+                new Chart(activityCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Running', 'Strength', 'Yoga', 'Cycling', 'Other'],
+                        datasets: [{
+                            data: [30, 25, 20, 15, 10],
+                            backgroundColor: ['#ff6b35', '#6366f1', '#10b981', '#f59e0b', '#ef4444']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: '#a0a0a0' }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Weight Chart
+            const weightCtx = document.getElementById('weightChart');
+            if (weightCtx && typeof Chart !== 'undefined') {
+                new Chart(weightCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                        datasets: [{
+                            label: 'Weight (kg)',
+                            data: [78, 77, 76, 75],
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                min: 70,
+                                max: 80,
+                                grid: { color: '#1a1a1a' },
+                                ticks: { color: '#a0a0a0' }
+                            },
+                            x: {
+                                grid: { color: '#1a1a1a' },
+                                ticks: { color: '#a0a0a0' }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            console.log('📊 Progress page loaded');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - FitTrack Pro</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            margin: 0;
+        }
+        
+        .navbar {
+            background: #0a0a0a;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        
+        .navbar-brand {
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b35, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.5rem;
+        }
+        
+        .nav-link {
+            color: #a0a0a0 !important;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem !important;
+        }
+        
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-dark {
+            background: #0d0d0d;
+            border: 1px solid #1a1a1a;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border-radius: 16px;
+            padding: 2rem;
+            border-left: 4px solid #ff6b35;
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #ffffff;
+        }
+        
+        .stat-label {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        
+        .quick-action {
+            background: #1a1a1a;
+            border: 2px solid #2a2a2a;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .quick-action:hover {
+            border-color: #ff6b35;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255,107,53,0.2);
+        }
+        
+        .btn-primary-custom {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            border: none;
+            color: white;
+            padding: 0.85rem 2rem;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+        
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255,107,53,0.3);
+        }
+        
+        .water-glass {
+            width: 50px;
+            height: 70px;
+            background: #1a1a1a;
+            border: 3px solid #2a2a2a;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: flex-end;
+            justify-content: center;
+            margin: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .water-glass.filled {
+            border-color: #3b82f6;
+        }
+        
+        .water-fill {
+            width: 100%;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            transition: height 0.3s;
+            position: absolute;
+            bottom: 0;
+        }
+        
+        .water-glass:hover {
+            transform: scale(1.1);
+        }
+        
+        .form-control {
+            background: #1a1a1a;
+            border: 2px solid #2a2a2a;
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 1rem;
+        }
+        
+        .form-control:focus {
+            background: #1a1a1a;
+            border-color: #ff6b35;
+            color: #ffffff;
+        }
+        
+        .form-select {
+            background: #1a1a1a;
+            border: 2px solid #2a2a2a;
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 1rem;
+        }
+        
+        .form-select:focus {
+            background: #1a1a1a;
+            border-color: #ff6b35;
+            color: #ffffff;
+        }
+        
+        .workout-log-item {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid px-5">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-lightning-charge-fill me-2"></i>FITTRACK PRO
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html" style="color: #ff6b35 !important;">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="nutrition.html">Videos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="workouts.html">Workouts</a></li>
+                    <li class="nav-item"><a class="nav-link" href="measurements.html">Measurements</a></li>
+                    <li class="nav-item"><a class="nav-link" href="meal-planner.html">Meal Planner</a></li>
+                    <li class="nav-item"><a class="nav-link" href="progress.html">Progress</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        
+        <!-- Header -->
+        <div class="mb-5">
+            <h1 class="page-title">👋 Welcome to Your Dashboard!</h1>
+            <p style="color: #a0a0a0; font-size: 1.1rem;">Track your fitness journey in one place</p>
+        </div>
+        
+        <!-- Stats Cards -->
+        <div class="row g-4 mb-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="bi bi-lightning-charge-fill text-white fs-3"></i>
+                    </div>
+                    <div class="stat-number" id="totalWorkouts">42</div>
+                    <div class="stat-label">Total Workouts</div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card" style="border-color: #10b981;">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+                        <i class="bi bi-fire text-white fs-3"></i>
+                    </div>
+                    <div class="stat-number" id="caloriesBurned">8,540</div>
+                    <div class="stat-label">Calories Burned</div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card" style="border-color: #6366f1;">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
+                        <i class="bi bi-clock text-white fs-3"></i>
+                    </div>
+                    <div class="stat-number" id="activeMinutes">1,260</div>
+                    <div class="stat-label">Active Minutes</div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card" style="border-color: #f59e0b;">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                        <i class="bi bi-trophy text-white fs-3"></i>
+                    </div>
+                    <div class="stat-number" id="currentStreak">7</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Water Intake Tracker -->
+        <div class="card-dark">
+            <h4 class="mb-4">
+                <i class="bi bi-droplet-fill text-info me-2"></i>
+                Daily Water Intake
+            </h4>
+            
+            <p class="text-muted mb-3">Goal: 8 glasses (2 liters) per day</p>
+            
+            <div class="mb-4" id="waterGlasses">
+                <!-- Generated by JavaScript -->
+            </div>
+            
+            <div class="d-flex gap-2">
+                <button class="btn btn-primary-custom" onclick="addWater()">
+                    <i class="bi bi-plus-lg me-2"></i>Add Glass
+                </button>
+                <button class="btn btn-outline-secondary" onclick="resetWater()">
+                    <i class="bi bi-arrow-clockwise me-2"></i>Reset
+                </button>
+            </div>
+            
+            <div class="mt-3">
+                <p class="mb-0">
+                    <strong id="waterCount">0</strong> / 8 glasses 
+                    (<strong id="waterLiters">0</strong> / 2.0 liters)
+                </p>
+            </div>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="mb-4">
+            <h4 class="mb-3">⚡ Quick Actions</h4>
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <div class="quick-action" onclick="openLogWorkoutModal()">
+                        <i class="bi bi-plus-circle fs-1 text-success mb-3"></i>
+                        <h6>Log Workout</h6>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="quick-action" onclick="window.location.href='measurements.html'">
+                        <i class="bi bi-rulers fs-1 text-warning mb-3"></i>
+                        <h6>Track Measurements</h6>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="quick-action" onclick="window.location.href='meal-planner.html'">
+                        <i class="bi bi-calendar-week fs-1 text-info mb-3"></i>
+                        <h6>Meal Planner</h6>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="quick-action" onclick="window.location.href='progress.html'">
+                        <i class="bi bi-graph-up fs-1 text-primary mb-3"></i>
+                        <h6>View Progress</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- BMI Calculator -->
+        <div class="card-dark">
+            <h4 class="mb-4">
+                <i class="bi bi-calculator text-warning me-2"></i>
+                BMI Calculator
+            </h4>
+            
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Weight (kg)</label>
+                    <input type="number" class="form-control" id="bmiWeight" placeholder="75" step="0.1">
+                </div>
+                
+                <div class="col-md-4">
+                    <label class="form-label">Height (cm)</label>
+                    <input type="number" class="form-control" id="bmiHeight" placeholder="175" step="0.1">
+                </div>
+                
+                <div class="col-md-4">
+                    <label class="form-label">&nbsp;</label>
+                    <button class="btn btn-primary-custom w-100" onclick="calculateBMI()">
+                        <i class="bi bi-calculator me-2"></i>Calculate BMI
+                    </button>
+                </div>
+            </div>
+            
+            <div id="bmiResult" class="mt-4" style="display: none;">
+                <div class="alert" style="background: rgba(16,185,129,0.1); border: 1px solid #10b981; color: #10b981;">
+                    <h5 class="mb-2">Your BMI: <strong id="bmiValue">0</strong></h5>
+                    <p class="mb-0" id="bmiCategory">Normal Weight</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Charts -->
+        <div class="row g-4 mb-4">
+            <div class="col-lg-8">
+                <div class="card-dark">
+                    <h5 class="mb-4">📊 Weekly Activity</h5>
+                    <canvas id="weeklyChart" height="80"></canvas>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card-dark">
+                    <h5 class="mb-4">🥧 Workout Types</h5>
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recent Workouts -->
+        <div class="card-dark">
+            <h4 class="mb-4">
+                <i class="bi bi-clock-history text-primary me-2"></i>
+                Recent Workouts
+            </h4>
+            
+            <div id="workoutLog">
+                <div class="workout-log-item">
+                    <div>
+                        <h6 class="mb-1">Running</h6>
+                        <small class="text-muted">Today at 7:00 AM</small>
+                    </div>
+                    <div>
+                        <span class="badge bg-primary">30 min</span>
+                        <span class="badge bg-success ms-2">300 cal</span>
+                    </div>
+                </div>
+                
+                <div class="workout-log-item">
+                    <div>
+                        <h6 class="mb-1">Strength Training</h6>
+                        <small class="text-muted">Yesterday at 6:00 PM</small>
+                    </div>
+                    <div>
+                        <span class="badge bg-primary">45 min</span>
+                        <span class="badge bg-success ms-2">270 cal</span>
+                    </div>
+                </div>
+                
+                <div class="workout-log-item">
+                    <div>
+                        <h6 class="mb-1">Yoga</h6>
+                        <small class="text-muted">2 days ago</small>
+                    </div>
+                    <div>
+                        <span class="badge bg-primary">60 min</span>
+                        <span class="badge bg-success ms-2">180 cal</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <button class="btn btn-primary-custom" onclick="openLogWorkoutModal()">
+                    <i class="bi bi-plus-circle me-2"></i>Log New Workout
+                </button>
+            </div>
+        </div>
+        
+    </div>
+    
+    <!-- Log Workout Modal -->
+    <div class="modal fade" id="logWorkoutModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content" style="background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 20px;">
+                <div class="modal-header" style="border-bottom: 1px solid #2a2a2a;">
+                    <h5 class="modal-title text-white">
+                        <i class="bi bi-plus-circle me-2"></i>Log Workout
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" style="filter: invert(1);"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="workoutForm">
+                        <div class="mb-3">
+                            <label class="form-label text-white">Workout Type</label>
+                            <select class="form-select" id="workoutType" required>
+                                <option value="">Select type...</option>
+                                <option value="Running">Running</option>
+                                <option value="Strength Training">Strength Training</option>
+                                <option value="Yoga">Yoga</option>
+                                <option value="Cycling">Cycling</option>
+                                <option value="Swimming">Swimming</option>
+                                <option value="HIIT">HIIT</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label text-white">Duration (minutes)</label>
+                            <input type="number" class="form-control" id="workoutDuration" min="1" max="300" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label text-white">Calories Burned (auto-calculated)</label>
+                            <input type="number" class="form-control" id="workoutCalories" readonly>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label text-white">Notes</label>
+                            <textarea class="form-control" id="workoutNotes" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid #2a2a2a;">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary-custom" onclick="saveWorkout()">
+                        <i class="bi bi-save me-2"></i>Save Workout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Calorie rates per minute
+        const CALORIE_RATES = {
+            'Running': 10,
+            'Strength Training': 6,
+            'Yoga': 3,
+            'Cycling': 8,
+            'Swimming': 11,
+            'HIIT': 15
+        };
+        
+        // Water tracking
+        let waterCount = 0;
+        
+        function loadWater() {
+            const saved = localStorage.getItem('fittrack_water_' + new Date().toDateString());
+            if (saved) {
+                waterCount = parseInt(saved);
+            }
+            displayWater();
+        }
+        
+        function saveWater() {
+            localStorage.setItem('fittrack_water_' + new Date().toDateString(), waterCount);
+        }
+        
+        function displayWater() {
+            let html = '';
+            for (let i = 0; i < 8; i++) {
+                const filled = i < waterCount;
+                const height = filled ? '100%' : '0%';
+                html += `
+                    <div class="water-glass ${filled ? 'filled' : ''}" onclick="toggleWater(${i})">
+                        <div class="water-fill" style="height: ${height};"></div>
+                    </div>
+                `;
+            }
+            document.getElementById('waterGlasses').innerHTML = html;
+            
+            document.getElementById('waterCount').textContent = waterCount;
+            document.getElementById('waterLiters').textContent = (waterCount * 0.25).toFixed(2);
+        }
+        
+        function toggleWater(index) {
+            if (index < waterCount) {
+                waterCount = index;
+            } else {
+                waterCount = index + 1;
+            }
+            saveWater();
+            displayWater();
+        }
+        
+        function addWater() {
+            if (waterCount < 8) {
+                waterCount++;
+                saveWater();
+                displayWater();
+            } else {
+                alert('🎉 Daily goal reached! Great hydration!');
+            }
+        }
+        
+        function resetWater() {
+            if (confirm('Reset water intake for today?')) {
+                waterCount = 0;
+                saveWater();
+                displayWater();
+            }
+        }
+        
+        // Auto-calculate calories
+        document.getElementById('workoutType')?.addEventListener('change', function() {
+            const duration = parseInt(document.getElementById('workoutDuration').value) || 0;
+            if (duration > 0 && this.value) {
+                const rate = CALORIE_RATES[this.value] || 5;
+                document.getElementById('workoutCalories').value = rate * duration;
+            }
+        });
+        
+        document.getElementById('workoutDuration')?.addEventListener('input', function() {
+            const type = document.getElementById('workoutType').value;
+            if (type && this.value) {
+                const rate = CALORIE_RATES[type] || 5;
+                document.getElementById('workoutCalories').value = rate * parseInt(this.value);
+            }
+        });
+        
+        // Open modal
+        function openLogWorkoutModal() {
+            const modal = new bootstrap.Modal(document.getElementById('logWorkoutModal'));
+            modal.show();
+        }
+        
+        // Save workout
+        function saveWorkout() {
+            const type = document.getElementById('workoutType').value;
+            const duration = document.getElementById('workoutDuration').value;
+            const calories = document.getElementById('workoutCalories').value;
+            
+            if (!type || !duration || !calories) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            alert(`✅ Workout logged!\n\n${type}\n${duration} minutes\n${calories} calories burned`);
+            
+            const modal = bootstrap.Modal.getInstance(document.getElementById('logWorkoutModal'));
+            modal.hide();
+            
+            document.getElementById('workoutForm').reset();
+        }
+        
+        // BMI Calculator
+        function calculateBMI() {
+            const weight = parseFloat(document.getElementById('bmiWeight').value);
+            const height = parseFloat(document.getElementById('bmiHeight').value);
+            
+            if (!weight || !height) {
+                alert('Please enter both weight and height');
+                return;
+            }
+            
+            const heightM = height / 100;
+            const bmi = (weight / (heightM * heightM)).toFixed(1);
+            
+            let category = '';
+            let color = '';
+            
+            if (bmi < 18.5) {
+                category = 'Underweight';
+                color = '#3b82f6';
+            } else if (bmi < 25) {
+                category = 'Normal Weight';
+                color = '#10b981';
+            } else if (bmi < 30) {
+                category = 'Overweight';
+                color = '#f59e0b';
+            } else {
+                category = 'Obese';
+                color = '#ef4444';
+            }
+            
+            document.getElementById('bmiValue').textContent = bmi;
+            document.getElementById('bmiCategory').textContent = category;
+            document.getElementById('bmiResult').style.display = 'block';
+            document.getElementById('bmiResult').querySelector('.alert').style.borderColor = color;
+            document.getElementById('bmiResult').querySelector('.alert').style.color = color;
+        }
+        
+        // Initialize charts
+        document.addEventListener('DOMContentLoaded', function() {
+            loadWater();
+            
+            // Weekly chart
+            const weeklyCtx = document.getElementById('weeklyChart');
+            if (weeklyCtx && typeof Chart !== 'undefined') {
+                new Chart(weeklyCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'Calories Burned',
+                            data: [320, 450, 380, 420, 520, 290, 410],
+                            backgroundColor: '#ff6b35'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { labels: { color: '#a0a0a0' } } },
+                        scales: {
+                            y: { 
+                                beginAtZero: true,
+                                grid: { color: '#1a1a1a' },
+                                ticks: { color: '#a0a0a0' }
+                            },
+                            x: {
+                                grid: { color: '#1a1a1a' },
+                                ticks: { color: '#a0a0a0' }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Pie chart
+            const pieCtx = document.getElementById('pieChart');
+            if (pieCtx && typeof Chart !== 'undefined') {
+                new Chart(pieCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Running', 'Strength', 'Yoga', 'Other'],
+                        datasets: [{
+                            data: [35, 30, 20, 15],
+                            backgroundColor: ['#ff6b35', '#6366f1', '#10b981', '#f59e0b']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: '#a0a0a0' }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            console.log('📊 Dashboard Ready');
+        });
+    </script>
+</body>
+</html>

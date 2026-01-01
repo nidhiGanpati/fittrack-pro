@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Planner | FitTrack Pro</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000000;
+            color: #ffffff;
+        }
+        
+        .navbar {
+            background: #000000;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        
+        .navbar-brand {
+            font-weight: 900;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-link {
+            color: #a0a0a0 !important;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem !important;
+        }
+        
+        .btn-get-started {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            border: none;
+        }
+        
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .page-subtitle {
+            color: #a0a0a0;
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 4rem;
+        }
+        
+        .goal-card {
+            background: #0d0d0d;
+            border: 2px solid #1a1a1a;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            height: 100%;
+        }
+        
+        .goal-card:hover {
+            transform: translateY(-10px);
+            border-color: #ff6b35;
+            box-shadow: 0 20px 50px rgba(255,107,53,0.2);
+        }
+        
+        .goal-card.selected {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            border-color: #ff6b35;
+        }
+        
+        .goal-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .goal-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+        
+        .goal-details {
+            color: #d0d0d0;
+            font-size: 1rem;
+        }
+        
+        .meal-plan-section {
+            margin-top: 4rem;
+            display: none;
+        }
+        
+        .meal-plan-section.active {
+            display: block;
+        }
+        
+        .day-card {
+            background: #0d0d0d;
+            border: 1px solid #1a1a1a;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .day-header {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            display: inline-block;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .meal-time {
+            color: #ff6b35;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .food-item {
+            background: #1a1a1a;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .food-name {
+            color: #d0d0d0;
+        }
+        
+        .food-cal {
+            color: #10b981;
+            font-weight: 600;
+        }
+        
+        .meal-total {
+            background: #1a1a1a;
+            border: 2px solid #ff6b35;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            text-align: right;
+            font-weight: 700;
+            color: #ff6b35;
+        }
+        
+        .summary-box {
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .summary-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+        }
+        
+        .nutrient-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .nutrient-item {
+            background: #0d0d0d;
+            padding: 1.5rem;
+            border-radius: 12px;
+        }
+        
+        .nutrient-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #10b981, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nutrient-label {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+        
+        .empty-icon {
+            font-size: 5rem;
+            color: #2a2a2a;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid px-5">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-lightning-charge-fill me-2"></i>FITTRACK PRO
+            </a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="nutrition.html">Videos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="workouts.html">Workouts</a></li>
+                    <li class="nav-item"><a class="nav-link" href="meal-planner.html" style="color: #ff6b35 !important;">Meal Planner</a></li>
+                    <li class="nav-item"><a class="nav-link" href="progress.html">Progress</a></li>
+                </ul>
+                <button class="btn btn-get-started" onclick="window.location.href='dashboard.html'">Get Started</button>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="main-container">
+        
+        <div class="page-title">
+            <i class="bi bi-calendar-week me-3" style="color: #10b981;"></i>7-Day Meal Planner
+        </div>
+        <div class="page-subtitle">Get personalized meal plans based on your fitness goals</div>
+        
+        <div class="summary-box">
+            <div class="summary-title">
+                <i class="bi bi-bullseye text-warning me-2"></i>Select Your Goal
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="goal-card" id="loseCard" onclick="generateMealPlan('lose')">
+                        <div class="goal-icon">
+                            <i class="bi bi-arrow-down-circle" style="color: #ef4444;"></i>
+                        </div>
+                        <div class="goal-title">Lose Weight</div>
+                        <div class="goal-details">1500 cal/day<br>High protein, low carb</div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="goal-card" id="maintainCard" onclick="generateMealPlan('maintain')">
+                        <div class="goal-icon">
+                            <i class="bi bi-dash-circle" style="color: #10b981;"></i>
+                        </div>
+                        <div class="goal-title">Maintain Weight</div>
+                        <div class="goal-details">2000 cal/day<br>Balanced macros</div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="goal-card" id="gainCard" onclick="generateMealPlan('gain')">
+                        <div class="goal-icon">
+                            <i class="bi bi-arrow-up-circle" style="color: #f59e0b;"></i>
+                        </div>
+                        <div class="goal-title">Gain Muscle</div>
+                        <div class="goal-details">2800 cal/day<br>High protein, high carb</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="emptyState" class="empty-state">
+            <div class="empty-icon">
+                <i class="bi bi-emoji-smile"></i>
+            </div>
+            <h3 style="color: #808080;">Select a goal above to generate your personalized 7-day meal plan</h3>
+        </div>
+        
+        <div id="mealPlanDisplay" class="meal-plan-section"></div>
+        
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        const MealPlans = {
+            lose: {
+                title: 'Weight Loss Plan',
+                calories: 1500,
+                protein: 120,
+                carbs: 150,
+                fat: 50,
+                days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                meals: {
+                    breakfast: [
+                        ['2 Scrambled Eggs', '156 cal'],
+                        ['Whole Wheat Toast', '160 cal'],
+                        ['1 Banana', '105 cal']
+                    ],
+                    snack1: [
+                        ['Greek Yogurt (150g)', '100 cal'],
+                        ['Mixed Berries', '30 cal']
+                    ],
+                    lunch: [
+                        ['Grilled Chicken (150g)', '248 cal'],
+                        ['Brown Rice (100g)', '112 cal'],
+                        ['Steamed Broccoli', '50 cal']
+                    ],
+                    snack2: [
+                        ['Apple', '95 cal'],
+                        ['Almonds (10)', '70 cal']
+                    ],
+                    dinner: [
+                        ['Grilled Salmon (150g)', '280 cal'],
+                        ['Quinoa (80g)', '120 cal'],
+                        ['Mixed Salad', '50 cal']
+                    ]
+                }
+            },
+            maintain: {
+                title: 'Weight Maintenance Plan',
+                calories: 2000,
+                protein: 150,
+                carbs: 200,
+                fat: 70,
+                days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                meals: {
+                    breakfast: [
+                        ['3 Eggs Omelette', '234 cal'],
+                        ['Whole Wheat Toast (2)', '160 cal'],
+                        ['Avocado (half)', '120 cal'],
+                        ['Orange Juice', '90 cal']
+                    ],
+                    snack1: [
+                        ['Protein Shake', '200 cal'],
+                        ['Banana', '105 cal']
+                    ],
+                    lunch: [
+                        ['Grilled Chicken (200g)', '330 cal'],
+                        ['Brown Rice (150g)', '168 cal'],
+                        ['Mixed Vegetables', '80 cal']
+                    ],
+                    snack2: [
+                        ['Mixed Nuts (30g)', '180 cal'],
+                        ['Apple', '95 cal']
+                    ],
+                    dinner: [
+                        ['Salmon (150g)', '280 cal'],
+                        ['Quinoa (100g)', '120 cal'],
+                        ['Roasted Vegetables', '100 cal']
+                    ]
+                }
+            },
+            gain: {
+                title: 'Muscle Gain Plan',
+                calories: 2800,
+                protein: 200,
+                carbs: 300,
+                fat: 90,
+                days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                meals: {
+                    breakfast: [
+                        ['4 Eggs', '312 cal'],
+                        ['Whole Wheat Toast (3)', '240 cal'],
+                        ['Peanut Butter (2 tbsp)', '190 cal'],
+                        ['Milk (300ml)', '183 cal']
+                    ],
+                    snack1: [
+                        ['Mass Gainer Shake', '400 cal'],
+                        ['2 Bananas', '210 cal']
+                    ],
+                    lunch: [
+                        ['Grilled Chicken (250g)', '413 cal'],
+                        ['White Rice (200g)', '260 cal'],
+                        ['Vegetables', '80 cal']
+                    ],
+                    snack2: [
+                        ['Protein Shake', '250 cal'],
+                        ['Energy Bar', '200 cal']
+                    ],
+                    dinner: [
+                        ['Lean Beef (200g)', '330 cal'],
+                        ['Sweet Potato (200g)', '180 cal'],
+                        ['Green Beans', '40 cal']
+                    ]
+                }
+            }
+        };
+        
+        function generateMealPlan(goal) {
+            document.querySelectorAll('.goal-card').forEach(c => c.classList.remove('selected'));
+            document.getElementById(goal + 'Card').classList.add('selected');
+            
+            document.getElementById('emptyState').style.display = 'none';
+            
+            const plan = MealPlans[goal];
+            let html = `
+                <div class="summary-box">
+                    <div class="summary-title">${plan.title}</div>
+                    <div class="nutrient-grid">
+                        <div class="nutrient-item">
+                            <div class="nutrient-value">${plan.calories}</div>
+                            <div class="nutrient-label">Calories/Day</div>
+                        </div>
+                        <div class="nutrient-item">
+                            <div class="nutrient-value">${plan.protein}g</div>
+                            <div class="nutrient-label">Protein</div>
+                        </div>
+                        <div class="nutrient-item">
+                            <div class="nutrient-value">${plan.carbs}g</div>
+                            <div class="nutrient-label">Carbs</div>
+                        </div>
+                        <div class="nutrient-item">
+                            <div class="nutrient-value">${plan.fat}g</div>
+                            <div class="nutrient-label">Fats</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            plan.days.forEach(day => {
+                html += `
+                    <div class="day-card">
+                        <div class="day-header">
+                            <i class="bi bi-calendar-check me-2"></i>${day}
+                        </div>
+                        
+                        <div class="meal-time">🌅 Breakfast (7:00 AM)</div>
+                        ${plan.meals.breakfast.map(item => `
+                            <div class="food-item">
+                                <span class="food-name">${item[0]}</span>
+                                <span class="food-cal">${item[1]}</span>
+                            </div>
+                        `).join('')}
+                        
+                        <div class="meal-time">☕ Morning Snack (10:00 AM)</div>
+                        ${plan.meals.snack1.map(item => `
+                            <div class="food-item">
+                                <span class="food-name">${item[0]}</span>
+                                <span class="food-cal">${item[1]}</span>
+                            </div>
+                        `).join('')}
+                        
+                        <div class="meal-time">🍽️ Lunch (1:00 PM)</div>
+                        ${plan.meals.lunch.map(item => `
+                            <div class="food-item">
+                                <span class="food-name">${item[0]}</span>
+                                <span class="food-cal">${item[1]}</span>
+                            </div>
+                        `).join('')}
+                        
+                        <div class="meal-time">🥤 Afternoon Snack (4:00 PM)</div>
+                        ${plan.meals.snack2.map(item => `
+                            <div class="food-item">
+                                <span class="food-name">${item[0]}</span>
+                                <span class="food-cal">${item[1]}</span>
+                            </div>
+                        `).join('')}
+                        
+                        <div class="meal-time">🌙 Dinner (7:00 PM)</div>
+                        ${plan.meals.dinner.map(item => `
+                            <div class="food-item">
+                                <span class="food-name">${item[0]}</span>
+                                <span class="food-cal">${item[1]}</span>
+                            </div>
+                        `).join('')}
+                        
+                        <div class="meal-total">
+                            <i class="bi bi-calculator me-2"></i>Daily Total: ~${plan.calories} calories
+                        </div>
+                    </div>
+                `;
+            });
+            
+            const display = document.getElementById('mealPlanDisplay');
+            display.innerHTML = html;
+            display.classList.add('active');
+            display.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    </script>
+</body>
+</html>

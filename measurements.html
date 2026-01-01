@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Body Measurements - FitTrack Pro</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000000;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .navbar {
+            background: #0a0a0a;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        
+        .navbar-brand {
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b35, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.5rem;
+        }
+        
+        .nav-link {
+            color: #a0a0a0 !important;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem !important;
+        }
+        
+        .nav-link:hover {
+            color: #ffffff !important;
+        }
+        
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .page-header {
+            margin-bottom: 3rem;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-subtitle {
+            color: #a0a0a0;
+            font-size: 1.1rem;
+        }
+        
+        .card-dark {
+            background: #0d0d0d;
+            border: 1px solid #1a1a1a;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-box {
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b35, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-label {
+            color: #a0a0a0;
+            margin-top: 0.5rem;
+        }
+        
+        .form-control {
+            background: #1a1a1a;
+            border: 2px solid #2a2a2a;
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 1rem;
+        }
+        
+        .form-control:focus {
+            background: #1a1a1a;
+            border-color: #ff6b35;
+            color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(255,107,53,0.1);
+        }
+        
+        .btn-primary-custom {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+        
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255,107,53,0.3);
+        }
+        
+        .measurement-item {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .measurement-item:hover {
+            border-color: #ff6b35;
+        }
+        
+        .bmi-indicator {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+        
+        .bmi-normal {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+        
+        .bmi-overweight {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+        
+        .bmi-underweight {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid px-5">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-lightning-charge-fill me-2"></i>FITTRACK PRO
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="nutrition.html">Videos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="workouts.html">Workouts</a></li>
+                    <li class="nav-item"><a class="nav-link" href="measurements.html">Measurements</a></li>
+                    <li class="nav-item"><a class="nav-link" href="meal-planner.html">Meal Planner</a></li>
+                    <li class="nav-item"><a class="nav-link" href="progress.html">Progress</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">
+                <i class="bi bi-rulers text-warning me-3"></i>Body Measurements
+            </h1>
+            <p class="page-subtitle">Track your body composition and measurements over time</p>
+        </div>
+        
+        <!-- Current Stats -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-3">
+                <div class="stat-box">
+                    <div class="stat-number" id="currentWeight">0</div>
+                    <div class="stat-label">Current Weight (kg)</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-box">
+                    <div class="stat-number" id="currentBMI">0</div>
+                    <div class="stat-label">BMI</div>
+                    <div class="mt-2">
+                        <span class="bmi-indicator bmi-normal" id="bmiStatus">Normal</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-box">
+                    <div class="stat-number" id="totalChange">0</div>
+                    <div class="stat-label">Total Change (kg)</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-box">
+                    <div class="stat-number" id="measurementCount">0</div>
+                    <div class="stat-label">Total Measurements</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Add Measurement Form -->
+        <div class="card-dark">
+            <h4 class="mb-4">
+                <i class="bi bi-plus-circle text-success me-2"></i>
+                Add New Measurement
+            </h4>
+            
+            <form id="measurementForm" class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Weight (kg)</label>
+                    <input type="number" class="form-control" id="weight" step="0.1" min="30" max="300" placeholder="75.5" required>
+                </div>
+                
+                <div class="col-md-4">
+                    <label class="form-label">Height (cm)</label>
+                    <input type="number" class="form-control" id="height" step="0.1" min="100" max="250" placeholder="175" required>
+                </div>
+                
+                <div class="col-md-4">
+                    <label class="form-label">Body Fat % (optional)</label>
+                    <input type="number" class="form-control" id="bodyFat" step="0.1" min="5" max="60" placeholder="18">
+                </div>
+                
+                <div class="col-md-3">
+                    <label class="form-label">Chest (cm)</label>
+                    <input type="number" class="form-control" id="chest" step="0.1" placeholder="95">
+                </div>
+                
+                <div class="col-md-3">
+                    <label class="form-label">Waist (cm)</label>
+                    <input type="number" class="form-control" id="waist" step="0.1" placeholder="80">
+                </div>
+                
+                <div class="col-md-3">
+                    <label class="form-label">Hips (cm)</label>
+                    <input type="number" class="form-control" id="hips" step="0.1" placeholder="95">
+                </div>
+                
+                <div class="col-md-3">
+                    <label class="form-label">Arms (cm)</label>
+                    <input type="number" class="form-control" id="arms" step="0.1" placeholder="35">
+                </div>
+                
+                <div class="col-12">
+                    <label class="form-label">Notes (optional)</label>
+                    <textarea class="form-control" id="notes" rows="2" placeholder="How do you feel today?"></textarea>
+                </div>
+                
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary-custom w-100">
+                        <i class="bi bi-save me-2"></i>Save Measurement
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Weight Chart -->
+        <div class="card-dark">
+            <h4 class="mb-4">
+                <i class="bi bi-graph-up text-primary me-2"></i>
+                Weight Progress Chart
+            </h4>
+            <canvas id="weightChart" height="80"></canvas>
+        </div>
+        
+        <!-- Measurements History -->
+        <div class="card-dark">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="mb-0">
+                    <i class="bi bi-clock-history text-info me-2"></i>
+                    Measurement History
+                </h4>
+                <button class="btn btn-sm btn-outline-danger" onclick="clearAllMeasurements()">
+                    <i class="bi bi-trash"></i> Clear All
+                </button>
+            </div>
+            
+            <div id="measurementHistory">
+                <p class="text-center text-muted py-5">No measurements logged yet. Add your first measurement above!</p>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Measurements Data
+        const MeasurementsData = {
+            measurements: [],
+            currentWeight: 0,
+            currentBMI: 0,
+            currentHeight: 0
+        };
+        
+        // Load data on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMeasurements();
+            displayStats();
+            displayHistory();
+            initializeChart();
+            
+            console.log('📏 Measurements page loaded');
+        });
+        
+        // Load from localStorage
+        function loadMeasurements() {
+            const saved = localStorage.getItem('fittrack_measurements');
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    MeasurementsData.measurements = data.measurements || [];
+                    
+                    if (MeasurementsData.measurements.length > 0) {
+                        const latest = MeasurementsData.measurements[0];
+                        MeasurementsData.currentWeight = latest.weight;
+                        MeasurementsData.currentHeight = latest.height;
+                        MeasurementsData.currentBMI = calculateBMI(latest.weight, latest.height);
+                    }
+                } catch (e) {
+                    console.error('Error loading measurements:', e);
+                }
+            }
+        }
+        
+        // Save to localStorage
+        function saveMeasurements() {
+            localStorage.setItem('fittrack_measurements', JSON.stringify({
+                measurements: MeasurementsData.measurements
+            }));
+        }
+        
+        // Calculate BMI
+        function calculateBMI(weight, height) {
+            if (!weight || !height || height === 0) return 0;
+            const heightInMeters = height / 100;
+            return (weight / (heightInMeters * heightInMeters)).toFixed(1);
+        }
+        
+        // Get BMI status
+        function getBMIStatus(bmi) {
+            if (bmi < 18.5) return { text: 'Underweight', class: 'bmi-underweight' };
+            if (bmi < 25) return { text: 'Normal', class: 'bmi-normal' };
+            if (bmi < 30) return { text: 'Overweight', class: 'bmi-overweight' };
+            return { text: 'Obese', class: 'bmi-overweight' };
+        }
+        
+        // Display stats
+        function displayStats() {
+            document.getElementById('currentWeight').textContent = MeasurementsData.currentWeight || '0';
+            document.getElementById('currentBMI').textContent = MeasurementsData.currentBMI || '0';
+            document.getElementById('measurementCount').textContent = MeasurementsData.measurements.length;
+            
+            if (MeasurementsData.measurements.length > 0) {
+                const first = MeasurementsData.measurements[MeasurementsData.measurements.length - 1];
+                const change = (MeasurementsData.currentWeight - first.weight).toFixed(1);
+                document.getElementById('totalChange').textContent = (change >= 0 ? '+' : '') + change;
+            }
+            
+            const bmiStatus = getBMIStatus(MeasurementsData.currentBMI);
+            const bmiEl = document.getElementById('bmiStatus');
+            bmiEl.textContent = bmiStatus.text;
+            bmiEl.className = 'bmi-indicator ' + bmiStatus.class;
+        }
+        
+        // Display history
+        function displayHistory() {
+            const container = document.getElementById('measurementHistory');
+            
+            if (MeasurementsData.measurements.length === 0) {
+                container.innerHTML = '<p class="text-center text-muted py-5">No measurements logged yet. Add your first measurement above!</p>';
+                return;
+            }
+            
+            let html = '';
+            MeasurementsData.measurements.forEach((m, index) => {
+                const bmi = calculateBMI(m.weight, m.height);
+                html += `
+                    <div class="measurement-item">
+                        <div>
+                            <strong>${new Date(m.date).toLocaleDateString()}</strong><br>
+                            <small class="text-muted">
+                                Weight: ${m.weight}kg | BMI: ${bmi} | Waist: ${m.waist || 'N/A'}cm
+                            </small>
+                        </div>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteMeasurement(${index})">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // Initialize chart
+        function initializeChart() {
+            const ctx = document.getElementById('weightChart');
+            if (!ctx || typeof Chart === 'undefined') return;
+            
+            const labels = MeasurementsData.measurements.slice().reverse().map(m => 
+                new Date(m.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+            );
+            
+            const weights = MeasurementsData.measurements.slice().reverse().map(m => m.weight);
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels.length > 0 ? labels : ['Start'],
+                    datasets: [{
+                        label: 'Weight (kg)',
+                        data: weights.length > 0 ? weights : [0],
+                        borderColor: '#ff6b35',
+                        backgroundColor: 'rgba(255, 107, 53, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grid: { color: '#1a1a1a' },
+                            ticks: { color: '#a0a0a0' }
+                        },
+                        x: {
+                            grid: { color: '#1a1a1a' },
+                            ticks: { color: '#a0a0a0' }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Handle form submission
+        document.getElementById('measurementForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const measurement = {
+                id: Date.now(),
+                date: new Date().toISOString(),
+                weight: parseFloat(document.getElementById('weight').value),
+                height: parseFloat(document.getElementById('height').value),
+                bodyFat: document.getElementById('bodyFat').value ? parseFloat(document.getElementById('bodyFat').value) : null,
+                chest: document.getElementById('chest').value ? parseFloat(document.getElementById('chest').value) : null,
+                waist: document.getElementById('waist').value ? parseFloat(document.getElementById('waist').value) : null,
+                hips: document.getElementById('hips').value ? parseFloat(document.getElementById('hips').value) : null,
+                arms: document.getElementById('arms').value ? parseFloat(document.getElementById('arms').value) : null,
+                notes: document.getElementById('notes').value
+            };
+            
+            MeasurementsData.measurements.unshift(measurement);
+            MeasurementsData.currentWeight = measurement.weight;
+            MeasurementsData.currentHeight = measurement.height;
+            MeasurementsData.currentBMI = calculateBMI(measurement.weight, measurement.height);
+            
+            saveMeasurements();
+            
+            document.getElementById('measurementForm').reset();
+            displayStats();
+            displayHistory();
+            location.reload(); // Reload to update chart
+            
+            alert('✅ Measurement saved successfully!');
+        });
+        
+        // Delete measurement
+        function deleteMeasurement(index) {
+            if (confirm('Delete this measurement?')) {
+                MeasurementsData.measurements.splice(index, 1);
+                saveMeasurements();
+                
+                if (MeasurementsData.measurements.length > 0) {
+                    const latest = MeasurementsData.measurements[0];
+                    MeasurementsData.currentWeight = latest.weight;
+                    MeasurementsData.currentHeight = latest.height;
+                    MeasurementsData.currentBMI = calculateBMI(latest.weight, latest.height);
+                }
+                
+                displayStats();
+                displayHistory();
+                location.reload();
+                
+                alert('Measurement deleted');
+            }
+        }
+        
+        // Clear all
+        function clearAllMeasurements() {
+            if (confirm('Delete ALL measurements? This cannot be undone!')) {
+                MeasurementsData.measurements = [];
+                MeasurementsData.currentWeight = 0;
+                MeasurementsData.currentBMI = 0;
+                saveMeasurements();
+                
+                displayStats();
+                displayHistory();
+                location.reload();
+                
+                alert('All measurements cleared');
+            }
+        }
+        
+        console.log('📏 Body Measurements Ready');
+    </script>
+</body>
+</html>
