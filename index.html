@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FitTrack Pro - Your Complete Fitness Solution</title>
+    <title>Login - FitTrack Pro</title>
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -19,19 +19,16 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #000000;
             color: #ffffff;
-        }
-        
-        /* Hero Section */
-        .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
-            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            justify-content: center;
             position: relative;
             overflow: hidden;
         }
         
-        .hero::before {
+        /* Animated Background */
+        body::before {
             content: '';
             position: absolute;
             width: 500px;
@@ -39,9 +36,10 @@
             background: radial-gradient(circle, rgba(255,107,53,0.15) 0%, transparent 70%);
             top: -250px;
             right: -250px;
+            animation: float 20s infinite ease-in-out;
         }
         
-        .hero::after {
+        body::after {
             content: '';
             position: absolute;
             width: 400px;
@@ -49,198 +47,894 @@
             background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
             bottom: -200px;
             left: -200px;
+            animation: float 25s infinite ease-in-out reverse;
         }
         
-        .hero-content {
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -50px) scale(1.1); }
+            66% { transform: translate(-50px, 50px) scale(0.9); }
+        }
+        
+        .login-container {
+            max-width: 500px;
+            width: 100%;
             position: relative;
-            z-index: 2;
+            z-index: 10;
+            padding: 20px;
+        }
+        
+        .login-card {
+            background: #1a1a1a;
+            border: 2px solid #2a2a2a;
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(10px);
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .logo-container {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        
+        .logo {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #ff6b35, #6366f1);
+            border-radius: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.4);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 15px 35px rgba(255, 107, 53, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 20px 45px rgba(255, 107, 53, 0.5); }
+        }
+        
+        .logo i {
+            font-size: 2.8rem;
+            color: white;
         }
         
         .brand {
-            font-size: 3rem;
+            font-size: 2rem;
             font-weight: 900;
             background: linear-gradient(135deg, #ff6b35, #6366f1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
         }
         
-        .hero-title {
-            font-size: 4rem;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-        }
-        
-        .hero-subtitle {
-            font-size: 1.5rem;
+        .logo-subtitle {
             color: #a0a0a0;
-            margin-bottom: 3rem;
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+            font-weight: 500;
         }
         
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
+        .welcome-text {
+            text-align: center;
+            margin-bottom: 2rem;
         }
         
-        .feature-card {
-            background: #1a1a1a;
+        .welcome-text h4 {
+            color: #ffffff;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .welcome-text p {
+            color: #a0a0a0;
+            font-size: 0.95rem;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.6rem;
+            font-size: 0.9rem;
+        }
+        
+        .form-control {
+            padding: 0.85rem 1.1rem;
             border: 2px solid #2a2a2a;
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.3s;
-            cursor: pointer;
-            text-decoration: none;
-            color: white;
-            display: block;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: #0d0d0d;
+            color: #ffffff;
         }
         
-        .feature-card:hover {
+        .form-control:focus {
             border-color: #ff6b35;
-            transform: translateY(-8px);
-            box-shadow: 0 20px 60px rgba(255,107,53,0.2);
+            box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
+            background: #0d0d0d;
+            color: #ffffff;
+        }
+        
+        .form-control::placeholder {
+            color: #666666;
+        }
+        
+        .input-group {
+            position: relative;
+        }
+        
+        .input-group .form-control {
+            padding-right: 3.5rem;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #a0a0a0;
+            cursor: pointer;
+            font-size: 1.3rem;
+            transition: color 0.3s;
+            z-index: 10;
+            padding: 0.5rem;
+        }
+        
+        .password-toggle:hover {
+            color: #ff6b35;
+        }
+        
+        .password-strength {
+            height: 4px;
+            background: #2a2a2a;
+            border-radius: 2px;
+            margin-top: 0.6rem;
+            overflow: hidden;
+        }
+        
+        .password-strength-bar {
+            height: 100%;
+            width: 0;
+            transition: all 0.4s ease;
+            border-radius: 2px;
+        }
+        
+        .strength-weak { background: #ef4444; width: 33%; }
+        .strength-medium { background: #f59e0b; width: 66%; }
+        .strength-strong { background: #10b981; width: 100%; }
+        
+        .password-strength-text {
+            font-size: 0.75rem;
+            margin-top: 0.4rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             color: white;
         }
         
-        .feature-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #ff6b35, #6366f1);
-            border-radius: 18px;
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(255, 107, 53, 0.4);
+            background: linear-gradient(135deg, #ff8c42, #ff6b35);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+            background: #2a2a2a;
+        }
+        
+        .divider span {
+            background: #1a1a1a;
+            padding: 0 1.2rem;
+            position: relative;
+            color: #a0a0a0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-social {
+            padding: 0.85rem 1rem;
+            border: 2px solid #2a2a2a;
+            border-radius: 12px;
+            background: #0d0d0d;
+            font-weight: 600;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1.5rem;
+            gap: 0.6rem;
+            font-size: 0.9rem;
+            color: #ffffff;
         }
         
-        .feature-icon i {
-            font-size: 2rem;
-            color: white;
+        .btn-social:hover {
+            border-color: #ff6b35;
+            background: #1a1a1a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 107, 53, 0.2);
+            color: #ffffff;
         }
         
-        .feature-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
+        .btn-social i {
+            font-size: 1.3rem;
         }
         
-        .feature-desc {
+        .btn-google:hover { border-color: #DB4437; }
+        .btn-facebook:hover { border-color: #4267B2; }
+        
+        .form-check-input {
+            width: 1.2rem;
+            height: 1.2rem;
+            border: 2px solid #2a2a2a;
+            cursor: pointer;
+            background-color: #0d0d0d;
+        }
+        
+        .form-check-input:checked {
+            background-color: #ff6b35;
+            border-color: #ff6b35;
+        }
+        
+        .form-check-label {
+            font-size: 0.9rem;
             color: #a0a0a0;
-            font-size: 1rem;
-            line-height: 1.5;
+            cursor: pointer;
         }
         
-        .btn-hero {
-            background: linear-gradient(135deg, #ff6b35, #ff8c42);
-            color: white;
-            padding: 1.3rem 3rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.2rem;
-            border: none;
-            transition: all 0.3s;
+        .text-link {
+            color: #ff6b35;
             text-decoration: none;
-            display: inline-block;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.9rem;
         }
         
-        .btn-hero:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 50px rgba(255,107,53,0.4);
-            color: white;
+        .text-link:hover {
+            color: #ff8c42;
+            text-decoration: underline;
         }
         
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.5rem;
+        .alert {
+            border-radius: 12px;
+            border: none;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .alert-success {
+            background: rgba(16, 185, 129, 0.2);
+            border-left: 4px solid #10b981;
+            color: #10b981;
+        }
+        
+        .alert-danger {
+            background: rgba(239, 68, 68, 0.2);
+            border-left: 4px solid #ef4444;
+            color: #ef4444;
+        }
+        
+        .alert-info {
+            background: rgba(59, 130, 246, 0.2);
+            border-left: 4px solid #3b82f6;
+            color: #3b82f6;
+        }
+        
+        .demo-credentials {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
+            border-left: 4px solid #ff6b35;
+            padding: 1.2rem;
+            border-radius: 12px;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
+        }
+        
+        .demo-credentials h6 {
+            color: #ff6b35;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .demo-credentials p {
+            margin: 0.4rem 0;
+            font-size: 0.85rem;
+            color: #a0a0a0;
+            font-weight: 500;
+        }
+        
+        .demo-credentials strong {
+            font-weight: 700;
+            color: #ffffff;
+        }
+        
+        .demo-credentials code {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            color: #ff6b35;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border: 1px solid #2a2a2a;
+        }
+        
+        .modal-content {
+            border-radius: 20px;
+            border: 2px solid #2a2a2a;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            background: #1a1a1a;
+            color: #ffffff;
+        }
+        
+        .modal-header {
+            border-bottom: 1px solid #2a2a2a;
+            padding: 1.5rem 2rem;
+        }
+        
+        .modal-body {
+            padding: 2rem;
+        }
+        
+        .modal-title {
+            font-weight: 800;
+            color: #ffffff;
+        }
+        
+        .btn-close {
+            filter: invert(1);
+        }
+        
+        .spinner-border-sm {
+            width: 1.2rem;
+            height: 1.2rem;
+            border-width: 0.2rem;
+        }
+        
+        .is-invalid {
+            border-color: #ef4444 !important;
+            background-image: none;
+        }
+        
+        .invalid-feedback {
+            color: #ef4444;
+            font-size: 0.8rem;
+            margin-top: 0.4rem;
+            font-weight: 500;
+        }
+        
+        .signup-section {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #2a2a2a;
+        }
+        
+        .signup-section p {
+            color: #a0a0a0;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+        
+        .back-home {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .back-home a {
+            color: #ff6b35;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .back-home a:hover {
+            color: #ff8c42;
+        }
+        
+        @media (max-width: 576px) {
+            .login-card {
+                padding: 2rem 1.8rem;
             }
+            
+            .logo {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .logo i {
+                font-size: 2.2rem;
+            }
+            
             .brand {
-                font-size: 2rem;
+                font-size: 1.6rem;
+            }
+            
+            .welcome-text h4 {
+                font-size: 1.3rem;
             }
         }
     </style>
 </head>
 <body>
-    
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="text-center">
-                    <div class="brand">
-                        <i class="bi bi-lightning-charge-fill"></i> FITTRACK PRO
+    <div class="login-container">
+        <div class="login-card">
+            <!-- Logo -->
+            <div class="logo-container">
+                <div class="logo">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                </div>
+                <div class="brand">FITTRACK PRO</div>
+                <p class="logo-subtitle">Track. Train. Transform.</p>
+            </div>
+
+            <!-- Welcome Text -->
+            <div class="welcome-text">
+                <h4>Welcome Back!</h4>
+                <p>Sign in to continue your fitness journey</p>
+            </div>
+
+            <!-- Demo Credentials -->
+            <div class="demo-credentials">
+                <h6><i class="bi bi-info-circle-fill"></i> Demo Account Available</h6>
+                <p><strong>Email:</strong> <code>athlete@fittrack.com</code></p>
+                <p><strong>Password:</strong> <code>FitPro2024</code></p>
+            </div>
+
+            <!-- Alert Messages -->
+            <div id="alertContainer"></div>
+
+            <!-- Login Form -->
+            <form id="loginForm" novalidate>
+                <!-- Email -->
+                <div class="mb-3">
+                    <label for="email" class="form-label">
+                        <i class="bi bi-envelope-fill"></i> Email Address
+                    </label>
+                    <input 
+                        type="email" 
+                        class="form-control" 
+                        id="email" 
+                        placeholder="Enter your email"
+                        required
+                    >
+                    <div class="invalid-feedback">
+                        <i class="bi bi-exclamation-circle"></i> Please enter a valid email address
                     </div>
-                    <h1 class="hero-title">Transform Your<br>Fitness Journey</h1>
-                    <p class="hero-subtitle">Track workouts, nutrition, and progress all in one place</p>
-                    
-                    <a href="dashboard.html" class="btn-hero">
-                        <i class="bi bi-rocket-takeoff me-2"></i>Get Started Free
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label for="password" class="form-label">
+                        <i class="bi bi-lock-fill"></i> Password
+                    </label>
+                    <div class="input-group">
+                        <input 
+                            type="password" 
+                            class="form-control" 
+                            id="password" 
+                            placeholder="Enter your password"
+                            required
+                        >
+                        <button type="button" class="password-toggle" id="togglePassword" aria-label="Toggle password visibility">
+                            <i class="bi bi-eye-fill"></i>
+                        </button>
+                    </div>
+                    <div class="password-strength" id="passwordStrength">
+                        <div class="password-strength-bar"></div>
+                    </div>
+                    <div class="password-strength-text" id="strengthText"></div>
+                    <div class="invalid-feedback">
+                        <i class="bi bi-exclamation-circle"></i> Password must be at least 6 characters
+                    </div>
+                </div>
+
+                <!-- Remember Me & Forgot Password -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">
+                            Remember me
+                        </label>
+                    </div>
+                    <a href="#" class="text-link" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">
+                        Forgot password?
                     </a>
                 </div>
-                
-                <div class="feature-grid">
-                    <!-- Dashboard -->
-                    <a href="dashboard.html" class="feature-card">
-                        <div class="feature-icon">
-                            <i class="bi bi-speedometer2"></i>
-                        </div>
-                        <div class="feature-title">Dashboard</div>
-                        <div class="feature-desc">Track all your fitness metrics in one place with real-time statistics</div>
+
+                <!-- Login Button -->
+                <button type="submit" class="btn btn-primary w-100" id="loginBtn">
+                    <span id="loginBtnText">
+                        <i class="bi bi-box-arrow-in-right"></i> Sign In
+                    </span>
+                    <span id="loginSpinner" class="spinner-border spinner-border-sm d-none" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </span>
+                </button>
+            </form>
+
+            <!-- Divider -->
+            <div class="divider">
+                <span>or continue with</span>
+            </div>
+
+            <!-- Social Login -->
+            <div class="row g-3 mb-3">
+                <div class="col-6">
+                    <button class="btn btn-social btn-google w-100" id="googleLogin">
+                        <i class="bi bi-google"></i>
+                        <span>Google</span>
+                    </button>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-social btn-facebook w-100" id="facebookLogin">
+                        <i class="bi bi-facebook"></i>
+                        <span>Facebook</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sign Up Link -->
+            <div class="signup-section">
+                <p>
+                    Don't have an account? 
+                    <a href="#" class="text-link" data-bs-toggle="modal" data-bs-target="#registerModal">
+                        <strong>Create Account</strong>
                     </a>
-                    
-                    <!-- Nutrition & Videos -->
-                    <a href="nutrition.html" class="feature-card">
-                        <div class="feature-icon">
-                            <i class="bi bi-play-circle"></i>
+                </p>
+            </div>
+        </div>
+
+        <!-- Back to Landing Page -->
+        <div class="back-home">
+            <a href="index.html">
+                <i class="bi bi-arrow-left"></i> Back to Home
+            </a>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="forgotPasswordModalLabel">
+                        <i class="bi bi-key-fill"></i> Reset Password
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted mb-4" style="color: #a0a0a0 !important;">Enter your email address and we'll send you instructions to reset your password.</p>
+                    <form id="forgotPasswordForm">
+                        <div class="mb-3">
+                            <label for="resetEmail" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="resetEmail" placeholder="Enter your email" required>
                         </div>
-                        <div class="feature-title">Exercise Videos</div>
-                        <div class="feature-desc">Watch expert-led workouts for all ages and fitness levels</div>
-                    </a>
-                    
-                    <!-- Workouts -->
-                    <a href="workouts.html" class="feature-card">
-                        <div class="feature-icon">
-                            <i class="bi bi-clipboard-data"></i>
-                        </div>
-                        <div class="feature-title">Workout Library</div>
-                        <div class="feature-desc">Browse 1000+ exercises with detailed instructions</div>
-                    </a>
-                    
-                    <!-- Progress -->
-                    <a href="progress.html" class="feature-card">
-                        <div class="feature-icon">
-                            <i class="bi bi-graph-up-arrow"></i>
-                        </div>
-                        <div class="feature-title">Progress Tracking</div>
-                        <div class="feature-desc">Visualize your journey with charts and analytics</div>
-                    </a>
-                    
-                    <!-- Body Measurements -->
-                    <a href="measurements.html" class="feature-card">
-                        <div class="feature-icon">
-                            <i class="bi bi-rulers"></i>
-                        </div>
-                        <div class="feature-title">Body Measurements</div>
-                        <div class="feature-desc">Track weight, BMI, and body measurements over time</div>
-                    </a>
-                    
-                    <!-- Meal Planner -->
-                    <a href="meal-planner.html" class="feature-card">
-                        <div class="feature-icon">
-                            <i class="bi bi-calendar-week"></i>
-                        </div>
-                        <div class="feature-title">Meal Planner</div>
-                        <div class="feature-desc">Get personalized meal plans based on your goals</div>
-                    </a>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-send-fill"></i> Send Reset Link
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
-    
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">
+                        <i class="bi bi-person-plus-fill"></i> Create Account
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="registerName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="registerName" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerEmail" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="registerEmail" placeholder="Enter your email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="registerPassword" placeholder="Create a strong password" required minlength="6">
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password" required>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                            <label class="form-check-label" for="agreeTerms">
+                                I agree to the <a href="#" class="text-link">Terms & Conditions</a>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-person-check-fill"></i> Create Account
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     <script>
-        console.log('🏠 FitTrack Pro Home - All features unlocked');
-        console.log('✅ No login required - Direct access to all pages');
+        // Toggle Password Visibility
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('bi-eye-fill');
+                icon.classList.add('bi-eye-slash-fill');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('bi-eye-slash-fill');
+                icon.classList.add('bi-eye-fill');
+            }
+        });
+
+        // Password Strength Checker
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const strengthBar = document.querySelector('.password-strength-bar');
+            const strengthText = document.getElementById('strengthText');
+            
+            if (password.length === 0) {
+                strengthBar.className = 'password-strength-bar';
+                strengthText.innerHTML = '';
+                return;
+            }
+            
+            let strength = 0;
+            if (password.length >= 6) strength++;
+            if (password.length >= 10) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/\d/.test(password)) strength++;
+            if (/[^a-zA-Z\d]/.test(password)) strength++;
+            
+            if (strength <= 2) {
+                strengthBar.className = 'password-strength-bar strength-weak';
+                strengthText.innerHTML = '<i class="bi bi-exclamation-triangle-fill"></i> Weak password';
+                strengthText.style.color = '#ef4444';
+            } else if (strength <= 4) {
+                strengthBar.className = 'password-strength-bar strength-medium';
+                strengthText.innerHTML = '<i class="bi bi-shield-fill-check"></i> Medium password';
+                strengthText.style.color = '#f59e0b';
+            } else {
+                strengthBar.className = 'password-strength-bar strength-strong';
+                strengthText.innerHTML = '<i class="bi bi-shield-fill-check"></i> Strong password';
+                strengthText.style.color = '#10b981';
+            }
+        });
+
+        // Email Validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Show Alert
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type} alert-dismissible fade show`;
+            
+            const icon = type === 'success' ? 'check-circle-fill' : 
+                        type === 'danger' ? 'exclamation-triangle-fill' : 
+                        'info-circle-fill';
+            
+            alert.innerHTML = `
+                <i class="bi bi-${icon}"></i> ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            alertContainer.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 5000);
+        }
+
+        // Login Form Submit
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            
+            // Validation
+            let isValid = true;
+            
+            if (!validateEmail(email)) {
+                document.getElementById('email').classList.add('is-invalid');
+                isValid = false;
+            } else {
+                document.getElementById('email').classList.remove('is-invalid');
+            }
+            
+            if (password.length < 6) {
+                document.getElementById('password').classList.add('is-invalid');
+                isValid = false;
+            } else {
+                document.getElementById('password').classList.remove('is-invalid');
+            }
+            
+            if (!isValid) return;
+            
+            // Show loading
+            const loginBtn = document.getElementById('loginBtn');
+            const loginBtnText = document.getElementById('loginBtnText');
+            const loginSpinner = document.getElementById('loginSpinner');
+            
+            loginBtn.disabled = true;
+            loginBtnText.classList.add('d-none');
+            loginSpinner.classList.remove('d-none');
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Check demo credentials
+                if (email === 'athlete@fittrack.com' && password === 'FitPro2024') {
+                    const userData = {
+                        email: email,
+                        name: 'Demo Athlete',
+                        loggedIn: true,
+                        loginTime: new Date().toISOString()
+                    };
+                    
+                    sessionStorage.setItem('fittrackUser', JSON.stringify(userData));
+                    if (rememberMe) {
+                        sessionStorage.setItem('rememberMe', 'true');
+                    }
+                    
+                    showAlert('Login successful! Redirecting to dashboard...', 'success');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                } else {
+                    showAlert('Invalid email or password. Please use the demo credentials provided above.', 'danger');
+                    loginBtn.disabled = false;
+                    loginBtnText.classList.remove('d-none');
+                    loginSpinner.classList.add('d-none');
+                }
+            }, 1500);
+        });
+
+        // Forgot Password Form
+        document.getElementById('forgotPasswordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('resetEmail').value.trim();
+            
+            if (validateEmail(email)) {
+                showAlert('Password reset instructions sent to your email!', 'success');
+                const modal = bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal'));
+                modal.hide();
+                this.reset();
+            } else {
+                showAlert('Please enter a valid email address.', 'danger');
+            }
+        });
+
+        // Register Form
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+            
+            if (!agreeTerms) {
+                showAlert('Please agree to the Terms & Conditions.', 'danger');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showAlert('Passwords do not match!', 'danger');
+                return;
+            }
+            
+            if (!validateEmail(email)) {
+                showAlert('Please enter a valid email address.', 'danger');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showAlert('Password must be at least 6 characters long.', 'danger');
+                return;
+            }
+            
+            showAlert('Account created successfully! Please log in with your credentials.', 'success');
+            const modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+            modal.hide();
+            this.reset();
+            
+            document.getElementById('email').value = email;
+        });
+
+        // Social Login
+        document.getElementById('googleLogin').addEventListener('click', function() {
+            showAlert('Google login feature is not available in demo mode.', 'info');
+        });
+
+        document.getElementById('facebookLogin').addEventListener('click', function() {
+            showAlert('Facebook login feature is not available in demo mode.', 'info');
+        });
+
+        // Check if user is already logged in
+        window.addEventListener('load', function() {
+            const userData = sessionStorage.getItem('fittrackUser');
+            if (userData) {
+                const user = JSON.parse(userData);
+                if (user.loggedIn) {
+                    window.location.href = 'dashboard.html';
+                }
+            }
+        });
     </script>
 </body>
 </html>
